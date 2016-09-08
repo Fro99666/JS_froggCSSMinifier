@@ -4,6 +4,8 @@
  * with flag optionnal, g will be set by default
  * replace each 'from' by 'to' with rule 'flag'
  * syntax : [ { 'from' : 'A', 'to' : 'B' , 'flag' : 'gi' } , { 'from' : 'X', 'to' : 'Y' , 'flag' : 'm' } ]
+ * if you use special char as str they need to be double escape
+ * ex : ../ will be 'from' : '\\.\\.\\/'
  */	
 function minifierCSS( str , param )
 	{			
