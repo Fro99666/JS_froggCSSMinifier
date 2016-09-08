@@ -1,0 +1,49 @@
+<script>
+/*
+ * @param : array of [ from , to , flag ]
+ * with flag optionnal, g will be set by default
+ * replace each 'from' by 'to' with rule 'flag'
+ * syntax : [ { 'from' : 'A', 'to' : 'B' , 'flag' : 'gi' } , { 'from' : 'X', 'to' : 'Y' , 'flag' : 'm' } ]
+ */	
+function minifierCSS( str , param )
+	{			
+	var result,reg;
+	//remove line break
+	result = str.replace( /(\n|\r)/g , '' )
+	//replace tab & other similar by space
+				.replace( /\s/g , ' ' )
+	//remove multiple space
+				.replace( /[ ]+/g , ' ' )
+	//remove comments
+				.replace( /\/\*.*?\*\//g , '' )
+	//remove useless space
+				.replace( /[ ]^[A-Za-z0-9#\-]/g , '' )
+				.replace( /([:,;{}])[ ]/g , '$1' )
+				.replace( /[ ]([:,;{}])/g , '$1' );
+	//special replace set in param
+	for( p in param )
+		{
+		reg = param[p]['flag'] ? new RegExp( param[p]['from'] , param[p]['flag'] ) : new RegExp( param[p]['from'] , 'g' );
+		result = result.replace( reg , param[p]['to'] );
+		}
+	//return result
+	return result;
+	}
+
+//Minifier call
+function minifyCSS()
+{
+//set result
+document.getElementById('formResultData').value = minifierCSS( document.getElementById('cssToMinify').value );
+}
+</script>
+
+Css to minify :<br/>
+<textarea rows="10" cols="80" id="cssToMinify" name="cssToMinify" spellcheck="false">
+/* this is a test */
+.test { test : 		value ;}
+</textarea><br/>
+<input type="button" value="Minify CSS" onclick="javascript:minifyCSS();"/><br/>
+<br/>
+Result:<br/>
+<textarea rows="10" cols="80" id="formResultData" name="formResultData" spellcheck="false"></textarea><br/>
