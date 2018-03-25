@@ -19,9 +19,18 @@ function minifierCSS( str , param )
 	//remove comments
 				.replace( /\/\*.*?\*\//g , '' )
 	//remove useless space
+				.replace( /[ ]?>[ ]?/g , '>' )
 				.replace( /[ ]^[A-Za-z0-9#\-]/g , '' )
 				.replace( /([:,;{}])[ ]/g , '$1' )
-				.replace( /[ ]([:,;{}])/g , '$1' );
+				.replace( /[ ]([:,;{}])/g , '$1' )
+	//replace 0px by 0		
+				.replace(/([\(|:| ]0)(px|em|in|cm|mm|pc|ex|%)/, "$1")
+        // replace 0.3 by .3
+				.replace(/0(\.[0-9]+)/, "$1")
+        // remove last ; before }
+				.replace(/[;]+}/, "}");
+		
+		
 	//special replace set in param
 	for( p in param )
 		{
